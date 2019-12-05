@@ -25,22 +25,39 @@ $("#color").prepend($selectTheme);
 
 // hide/show correct color options for design
 
+$("#color").hide();
+$("#color")
+  .siblings()
+  .hide();
+
 $("#design").change(function() {
   if ($(this).val() === "js puns") {
+    $("#color").show();
+    $("#color")
+      .siblings()
+      .show();
     $(
-      '#color option[value="tomato"], option[value="steelblue"], option[value="dimgrey"]'
+      '#color option[value="tomato"], [value="steelblue"], [value="dimgrey"]'
     ).hide();
     $(
-      '#color option[value="cornflowerblue"], option[value="darkslategrey"], option[value="gold"]'
+      '#color option[value="cornflowerblue"],[value="darkslategrey"], [value="gold"]'
     ).show();
   } else if ($(this).val() === "heart js") {
+    $("#color").show();
+    $("#color")
+      .siblings()
+      .show();
     $(
-      '#color option[value="cornflowerblue"], option[value="darkslategrey"], option[value="gold"]'
+      '#color option[value="cornflowerblue"], [value="darkslategrey"], [value="gold"]'
     ).hide();
     $(
-      '#color option[value="tomato"], option[value="steelblue"], option[value="dimgrey"]'
+      '#color option[value="tomato"], [value="steelblue"], [value="dimgrey"]'
     ).show();
   } else {
+    $("#color").hide();
+    $("#color")
+      .siblings()
+      .hide();
     $("#color option").each(function() {
       $(this).hide();
     });
