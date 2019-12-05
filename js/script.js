@@ -1,8 +1,16 @@
 // Focus on first input - name input.
 $("#name").focus();
 
-// Hide other job role input
+// Hide other job role input show when other is selected
 $("#other-title").hide();
+
+$("#title").change(function() {
+  if ($(this).val() === "other") {
+    $("#other-title").show();
+  } else {
+    $("#other-title").hide();
+  }
+});
 
 // Hide all color options
 $("#color option").each(function() {
