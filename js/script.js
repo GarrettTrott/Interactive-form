@@ -1,3 +1,18 @@
+const $selectTheme = $(
+  '<option value="noSelection" selected>Please select a T-shirt theme</option>'
+);
+const $totalHeader = $(
+  '<p>Your total price for activities is: <strong>$<span id="total">0</span><strong></p>'
+);
+const $nameValidation = $("<span></span>");
+const $emailValidation = $("<span></span>");
+const $activitiesValidation = $(
+  '<span class="invalidLabel">Please Select at least one activity</span>'
+);
+const $creditValidation = $("<span></span>");
+const $zipValidation = $("<span></span>");
+const $cvvValidation = $("<span></span>");
+
 // Focus on first input - name input.
 $("#name").focus();
 
@@ -11,20 +26,14 @@ $("#title").change(function() {
   }
 });
 
-// Create "select theme" option placeholder and append to colors dropdown
-const $selectTheme = $(
-  '<option value="noSelection" selected>Please select a T-shirt theme</option>'
-);
 $("#color").prepend($selectTheme);
 
 // Hide all color options
-
 $("#color option").each(function() {
   $(this).hide();
 });
 
 // hide/show correct color options for design selected
-
 $("#color").hide();
 $("#color")
   .siblings()
@@ -65,19 +74,26 @@ $("#design").change(function() {
 });
 
 // add activities hide and show
-
-const $totalHeader = $(
-  '<p>Your total price for activities is: <strong>$<span id="total">0</span><strong></p>'
-);
 $totalHeader.show();
 $(".activities").append($totalHeader);
 
 $('input[type="checkbox"]').change(function() {
   let totalCost = 0;
-  const $time = $(this).attr("data-day-and-time");
+  const $clickedElement = $(this);
+  const $clickedTime = $(this).attr("data-day-and-time");
 
   $("input[type=checkbox]").each(function(index, element) {
-    // element == this
+    if (
+      $clickedTime === $(element).attr("data-day-and-time") &&
+      $clickedElement != $(element)
+    ) {
+      if ($clickedElement.is(":checked")) {
+        $(element).attr("disabled", true);
+      } else if ($clickedElement.is(":not(:checked)")) {
+        $(element).attr("disabled", false);
+      }
+      $clickedElement.attr("disabled", false);
+    }
   });
 
   $("input[type=checkbox]:checked").each(function() {
@@ -88,7 +104,6 @@ $('input[type="checkbox"]').change(function() {
 });
 
 // payment option show / hide
-
 $("option[value='select method']").hide();
 $("option[value='credit card']").attr("selected", true);
 $("#paypal").hide();
@@ -109,15 +124,6 @@ $("#payment").change(function() {
   }
 });
 
-// add validation spans to input labels//
-
-const $nameValidation = $("<span></span>");
-const $emailValidation = $("<span></span>");
-const $activitiesValidation = $("<span></span>");
-const $creditValidation = $("<span></span>");
-const $zipValidation = $("<span></span>");
-const $cvvValidation = $("<span></span>");
-
 // append validation spans to labels
 $("#name")
   .prev()
@@ -126,6 +132,7 @@ $("#mail")
   .prev()
   .append($emailValidation);
 $($activitiesValidation).insertAfter($("legend").eq(2));
+$activitiesValidation.hide();
 $("#cc-num")
   .prev()
   .append($creditValidation);
@@ -181,8 +188,6 @@ function isValidZipCode(zipcode) {
 function isValidCVV(cvv) {
   return /^[0-9]{3,4}$/.test(cvv);
 }
-
-function 
 
 function $colorValidateInput(
   $input,
@@ -274,6 +279,13 @@ $("form").submit(function(e) {
     isValidEmail,
     " Please enter a valid email address"
   );
+
+  if (activitiesAreSelected() === false) {
+    $activitiesValidation.show();
+  } else {
+    $activitiesValidation.hide();
+  }
+
   $colorValidateInput(
     $("#cc-num"),
     isValidCardNumber,
@@ -282,9 +294,8 @@ $("form").submit(function(e) {
   );
   $colorValidateInput($("#zip"), isValidZipCode);
   $colorValidateInput($("#cvv"), isValidCVV);
-  
-  // Validate all required fields //
 
+  // Validate all required fields //
   if (
     isValidName($("#name").val()) &&
     isValidEmail($("#mail").val()) &&
