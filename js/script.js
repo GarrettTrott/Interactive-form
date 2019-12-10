@@ -172,25 +172,7 @@ function activitiesAreSelected() {
 }
 
 function isValidCardNumber(cardNumber) {
-  let cardType;
-  const visa = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/.test(cardNumber);
-  const mastercard = /^(?:5[1-5][0-9]{14})$/.test(cardNumber);
-  const amex = /^(?:3[47][0-9]{13})$/.test(cardNumber);
-  const discover = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/.test(cardNumber);
-
-  if (visa === true) {
-    cardType = "Visa";
-  } else if (mastercard === true) {
-    cardType = "Mastercard";
-  } else if (amex === true) {
-    cardType = "Amex";
-  } else if (discover === true) {
-    cardType = "Discover";
-  } else {
-    cardType = false;
-  }
-
-  return cardType;
+  return /\b(?:\d[ -]*?){13,16}\b$/.test(cardNumber);
 }
 
 function isValidZipCode(zipcode) {
@@ -255,12 +237,7 @@ $("#mail").keyup(function() {
 });
 
 $("#cc-num").keyup(function() {
-  $colorValidateInput(
-    $(this),
-    isValidCardNumber,
-    "Enter a valid card number",
-    isValidCardNumber($(this).val())
-  );
+  $colorValidateInput($(this), isValidCardNumber, "Enter a valid card number");
 });
 
 $("#zip").keyup(function() {
