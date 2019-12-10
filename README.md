@@ -10,7 +10,7 @@ Clone project and open in any browser
 
 - HTML
 - CSS
-- [Jquery](http://www.https://jquery.com/) - The javavscipt Libray used
+- [Jquery](http://www.https://jquery.com/) - javaScript library used
 
 ## Authors
 

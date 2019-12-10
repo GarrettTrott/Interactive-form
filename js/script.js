@@ -1,5 +1,5 @@
-const $selectTheme = $(
-  '<option value="noSelection" selected>Please select a T-shirt theme</option>'
+const $selectColor = $(
+  '<option value="noSelection" selected>Please select a T-shirt color</option>'
 );
 const $totalHeader = $(
   '<p>Your total price for activities is: <strong>$<span id="total">0</span><strong></p>'
@@ -26,7 +26,7 @@ $("#title").change(function() {
   }
 });
 
-$("#color").prepend($selectTheme);
+$("#color").prepend($selectColor);
 
 // Hide all color options
 $("#color option").each(function() {
@@ -41,27 +41,39 @@ $("#color")
 
 $("#design").change(function() {
   if ($(this).val() === "js puns") {
+    $("#color").hide();
     $("#color").show();
     $("#color")
       .siblings()
       .show();
+    $($selectColor)
+      .hide()
+      .attr("selected", false);
     $(
       '#color option[value="tomato"], [value="steelblue"], [value="dimgrey"]'
     ).hide();
     $(
       '#color option[value="cornflowerblue"],[value="darkslategrey"], [value="gold"]'
     ).show();
+    $('color option[value="cornflowerblue"]').attr("selected", true);
+    $("#color").val("cornflowerblue");
   } else if ($(this).val() === "heart js") {
+    $("#color").hide();
     $("#color").show();
     $("#color")
       .siblings()
       .show();
+    $($selectColor)
+      .hide()
+      .attr("selected", false);
     $(
       '#color option[value="cornflowerblue"], [value="darkslategrey"], [value="gold"]'
     ).hide();
     $(
       '#color option[value="tomato"], [value="steelblue"], [value="dimgrey"]'
     ).show();
+    $('color option[value="tomato"]').attr("selected", true);
+    $("#color").val("tomato");
   } else {
     $("#color").hide();
     $("#color")
@@ -265,8 +277,6 @@ $submitMessage.css("text-align", "center");
 // submit form
 
 $("form").submit(function(e) {
-  e.preventDefault();
-
   function successMessage() {
     $submitMessage.css("color", "#34a853");
     $("#submitMessage").text("Registered for Full Stack Comf! See you soon!");
@@ -314,6 +324,7 @@ $("form").submit(function(e) {
   ) {
     successMessage();
   } else {
+    e.preventDefault();
     $submitMessage.css("color", "#e01a0f");
     $("#submitMessage").text("Please fill out the required fields above!");
   }
