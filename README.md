@@ -1,6 +1,6 @@
 # Interactive Form
 
-A markup form that validates input feilds in real time using regEx and jQuery.
+A markup form that validates input fields in real time using regEx and jQuery.
 
 ### Installing
 
