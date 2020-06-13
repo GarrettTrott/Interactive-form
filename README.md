@@ -1,6 +1,6 @@
 # Interactive Form
 
-One Paragraph of project description goes here
+A markup form that validates input feilds in real time using regEx and jQuery.
 
 ### Installing
 
